@@ -6,8 +6,8 @@
 
 
 // WiFi settings
-char ssid[] = "...";
-char pass[] = "...";
+char ssid[] = "jaimie";
+char pass[] = "jaimie22";
 int status = WL_IDLE_STATUS;
 WiFiClient  client;
 
