@@ -12,7 +12,7 @@
 - Breadboard
 
 ## Setting up the hardware
-![Alt text](/hardwaresetup.png)
+![Alt text](/hardwaresetup.jpg)
 
 This setup has a 7-segment display that has a common anode. A common anode means that the + is shared with all 7 segments and to activate one segment you need to put the digital pins on board to low so that they functions as a ground. 
 So I have connected each one of the 7 segments to a digital pin with resistors between them. The common anode of the display is connected to the 5v. The ldr is connected with the analog pin so that the board can receive variable data.
