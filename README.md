@@ -1,6 +1,10 @@
 
 # IOT Sleep tracker with immediate feedback
 
+## What is the idea
+
+I wanted to track my sleeping pattern, but manually keeping track seemed like to much work. So I started thinking about a sensor I could use. One of the things I noticed about my room besides the mess was that my room is quite dark when the shades are down. A ldr seemed like the perfect answer. Keep track of the lightlevel in the room. The only demand on me was to open the shades when I wake. Now I Store this lightlevel every couple of minutes on a server with a time stamp so that I have a picture of my sleeping habits. On a website I display this data in the form of a graph. Besides that I use a seven segment display to tell me how many hours I slept the previous night.
+
 ## What you need
 
 - A bedroom that has darkening shades
@@ -10,6 +14,7 @@
 - cables
 - 7-Segment Display
 - Breadboard
+- Url and hosting
 
 ## Setting up the hardware
 ![Alt text](/hardwaresetup.jpg)

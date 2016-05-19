@@ -112,7 +112,9 @@
 
       <section class="settings" style="margin-top: 5px; text-align:center">
         <h2>settings</h2>
-        <form action="index.php" method="post">
+        <p>Here you can set the threshold. A sensor value below this value is counted as time you are sleeping. Use the graph to determine the right threshold.</p>
+        <!-- action="index.php" -->
+        <form method="post">
           light threshold
           <input type="number" name="quantity" min="1" max="100">
           <input type="submit">
