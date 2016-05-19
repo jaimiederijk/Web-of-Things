@@ -4,6 +4,7 @@
 ## What is the idea
 
 I wanted to track my sleeping pattern, but manually keeping track seemed like to much work. So I started thinking about a sensor I could use. One of the things I noticed about my room besides the mess was that my room is quite dark when the shades are down. A ldr seemed like the perfect answer. Keep track of the lightlevel in the room. The only demand on me was to open the shades when I wake. Now I Store this lightlevel every couple of minutes on a server with a time stamp so that I have a picture of my sleeping habits. On a website I display this data in the form of a graph. Besides that I use a seven segment display to tell me how many hours I slept the previous night.
+[The website](http://www.jaimiederijk.nl/webofthings/)
 
 ## What you need
 
@@ -131,6 +132,10 @@ void loop() {
     delay(3000);
 }
 ```
+I used the following examples to create the arduino code
+- [esp httpserver](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266HTTPClient/examples/BasicHttpClient/BasicHttpClient.ino)
+- [wifi client](https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/WiFiClientBasic/WiFiClientBasic.ino)
+
 ## Server 
 
 ### Receive data and put it in a json
@@ -167,4 +172,36 @@ void loop() {
     }
   }
 ```
-Now you got a json on your server with all the data you want.
+Now you got a json on your server with all the data you want. We need to do something with this data. For this I used D3.js a javascript chart library. With this I made a chart.
+[d3.js](https://github.com/d3/d3/wiki)
+
+Now for the more interesting part. How do I determine how much i slept from the json file. 
+I used a threshold value and made a new array with only those values. So only data points with a light value below the treshold get put in this array. This is not yet very usefull because the timestamps in the data don't have any meaning yet for the computer. It can't determine what timestamp is after a other timestamp. So here I use another library. [moment.js](http://momentjs.com/)  Moment allows me to only take the data from the last 24 hours and find the time that I woke and went to bed and find the time difference between the two.
+```
+var graphData =[];
+var lastDaySleepArray = [];
+
+data.forEach(function (item){
+		if(item.time.substr(4,1)==0||item.time.substr(4,1)==1) {
+			
+			var dateTime = moment(item.date+item.time,"YYYY-MM-DDh:mm:ss a");
+			if (item.light<threshold) {// if light value is below threshold
+				if (moment(dateTime,"YYYY-MM-DDh:mm:ss a").isAfter(moment().subtract(20,'hours'))) { // if time is in the last 20 hours
+					lastDaySleepArray.push(dateTime);
+				}
+			};
+			graphData.push(item); 
+		}
+
+	})
+
+	var sleepMax = moment.max(lastDaySleepArray);
+	var sleepMin = moment.min(lastDaySleepArray);
+
+	var sleepTime = sleepMax.diff(sleepMin,"hours")
+	console.log (sleepTime);
+
+	$.post("http://www.jaimiederijk.nl/webofthings/index.php?light="+sleepTime)
+	var timeSlept = document.querySelector("#timeslept");
+	timeSlept.innerHTML=sleepTime;
+```
