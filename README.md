@@ -43,7 +43,9 @@ I include the used libraries and declare the variables.
   int  ledF= D5;
   int  ledG= D6;
 ```
-Here I store the patterns that are neccesary for each number
+Here I store the patterns that are neccesary for each number.
+
+[Seven segment display tutorial](http://www.hacktronics.com/Tutorials/arduino-and-7-segment-led.html)
 ```
 byte seven_seg_digits[10][7] = { 
                                { 0,0,0,0,0,0,1 },  // = 0
