@@ -41,6 +41,7 @@
 
 				//console.log(graphData);
 				var xScale = d3.scale.ordinal()
+					.domain(graphData.map(function(d) { return d.time }))
 					.rangeRoundBands([0, width], .2);
 
 				var yScale = d3.scale.linear()
